@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Letters - Arnav & Anokhiii</title>
+    <link rel="stylesheet" href="css/letters.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database-compat.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="date" id="currentDate"></div>
+            <div class="couple-names">Arnav & Anokhiii</div>
+            <div class="subtitle">Our Private Love Letters</div>
+        </div>
+
+        <!-- Letter Writing Section -->
+        <div class="letter-writing">
+            <div class="paper">
+                <div class="paper-lines"></div>
+                <div class="letter-content">
+                    <input type="text" id="letterTitle" class="letter-title" placeholder="Letter Title..." maxlength="100">
+                    
+                    <textarea id="letterBody" class="letter-body" placeholder="My dearest...
+
+Write your heart out here. Every word you type will be saved and shared between us in real-time.
+
+With all my love,"></textarea>
+                    
+                    <div class="letter-footer">
+                        <select id="senderName" class="sender-select">
+                            <option value="Arnav">Arnav</option>
+                            <option value="Anokhiii">Anokhiii</option>
+                        </select>
+                        <button id="sendLetter" class="send-button">
+                            <span class="heart">💕</span>
+                            Send Letter
+                            <span class="heart">💕</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Letters History Section -->
+        <div class="letters-history">
+            <h2 class="history-title">Our Love Story</h2>
+            <div id="lettersContainer" class="letters-container">
+                <div class="no-letters">
+                    <div class="empty-heart">💝</div>
+                    <p>No letters yet... Write the first one! 💕</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="heart-loading">💕</div>
+            <p>Loading our love letters...</p>
+        </div>
+    </div>
+
+    <script src="js/letters.js"></script>
+</body>
+</html>

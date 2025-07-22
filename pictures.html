@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arnav & Anokhiii - Our Memories</title>
+    <link rel="stylesheet" href="css/pictures.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-storage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database.min.js"></script>
+</head>
+<body>
+    <!-- Floating particles background -->
+    <div class="particles-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">Our Memory Garden</h1>
+        <p class="subtitle">Arnav & Anokhiii ♡</p>
+    </header>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+        <div class="upload-container">
+            <input type="file" id="imageUpload" multiple accept="image/*" class="upload-input">
+            <label for="imageUpload" class="upload-btn">
+                <span class="upload-icon">📸</span>
+                Add New Memories
+            </label>
+            <div class="special-checkbox-container">
+                <input type="checkbox" id="markSpecial" class="special-checkbox">
+                <label for="markSpecial" class="special-label">✨ Mark as Special</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Container -->
+    <div class="gallery-container" id="galleryContainer">
+        <!-- Images will be dynamically added here -->
+    </div>
+
+    <!-- Full Screen Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <img id="overlayImage" src="" alt="Memory">
+            <button class="close-btn" id="closeBtn">&times;</button>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Creating beautiful memories...</p>
+    </div>
+
+    <script src="js/pictures.js"></script>
+</body>
+</html>

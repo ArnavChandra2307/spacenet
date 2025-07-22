@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Private Journal</title>
+    <link rel="stylesheet" href="css/journal.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Our Private Journal</h1>
+        <div class="user-section">
+            <span id="current-user">User</span>
+            <button id="sync-btn">Sync Entries</button>
+        </div>
+    </header>
+
+    <!-- Main Journal Interface -->
+    <main>
+        <!-- New Entry Section -->
+        <section class="new-entry-section">
+            <h2>Create New Entry</h2>
+            
+            <form id="entry-form">
+                <div class="entry-header-form">
+                    <input type="text" id="entry-title" placeholder="Entry Title" required>
+                    <input type="date" id="entry-date">
+                    <select id="entry-author">
+                        <option value="user1">Me</option>
+                        <option value="user2">My Partner</option>
+                    </select>
+                    <select id="entry-type">
+                        <option value="text">Text Only</option>
+                        <option value="drawing">Drawing Only</option>
+                        <option value="mixed">Text + Drawing</option>
+                    </select>
+                </div>
+
+                <!-- Text Input Area -->
+                <div id="text-input-area" class="input-area">
+                    <h3>Text Content</h3>
+                    <div class="text-formatting-toolbar">
+                        <button type="button" data-format="bold"><b>B</b></button>
+<button type="button" onclick="applyFormatting('italic')"><i>I</i></button>
+<button type="button" onclick="applyFormatting('underline')"><u>U</u></button>
+
+                        <!-- <button type="button" data-format="italic">Italic</button>
+                        <button type="button" data-format="underline">Underline</button> -->
+                        <select id="font-size">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                        <input type="color" id="text-color" value="#000000">
+                     </div>
+                        <div id="entry-text" contenteditable="true" class="rich-text-editor" data-placeholder="Write your journal entry here..."></div>
+
+
+                     </div>
+
+                <!-- Drawing Input Area -->
+                <div id="drawing-input-area" class="input-area">
+                    <h3>Drawing Canvas</h3>
+                    <div class="drawing-toolbar">
+                        <label>Brush Size: 
+                            <input type="range" id="brush-size" min="1" max="20" value="3">
+                            <span id="brush-size-value">3</span>
+                        </label>
+                        <label>Color: 
+                            <input type="color" id="brush-color" value="#000000">
+                        </label>
+                        <button type="button" id="eraser-btn">Eraser</button>
+                        <button type="button" id="clear-canvas">Clear Canvas</button>
+                        <button type="button" id="undo-btn">Undo</button>
+                        <button type="button" id="redo-btn">Redo</button>
+                    </div>
+                    <canvas id="drawing-canvas" width="800" height="400"></canvas>
+                    <div class="canvas-info">
+                        <span>Click and drag to draw</span>
+                    </div>
+                </div>
+
+                <!-- Save Controls -->
+                <div class="save-controls">
+                    <button type="submit" id="save-entry-btn">Save Entry</button>
+                    <button type="button" id="save-draft-btn">Save as Draft</button>
+                    <button type="reset" id="clear-form-btn">Clear Form</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Entries List Section -->
+        <section class="entries-list-section">
+            <h2>Journal Entries</h2>
+            
+            <div class="filters">
+                <select id="filter-author">
+                    <option value="all">All Authors</option>
+                    <option value="user1">My Entries</option>
+                    <option value="user2">Partner's Entries</option>
+                </select>
+                <select id="filter-type">
+                    <option value="all">All Types</option>
+                    <option value="text">Text Only</option>
+                    <option value="drawing">Drawing Only</option>
+                    <option value="mixed">Mixed</option>
+                </select>
+                <input type="month" id="filter-month">
+                <button id="apply-filters">Apply Filters</button>
+            </div>
+
+            <div id="entries-container" class="entries-container">
+                <!-- Entries will be loaded here from entry.html files -->
+            </div>
+        </section>
+
+        <!-- Entry Preview Section -->
+        <section class="entry-preview-section" id="entry-preview" style="display: none;">
+            <h2>Entry Preview</h2>
+            <div class="preview-header">
+                <h3 id="preview-title">Entry Title</h3>
+                <div class="preview-meta">
+                    <span id="preview-date">Date</span>
+                    <span id="preview-author">Author</span>
+                    <span id="preview-type">Type</span>
+                </div>
+            </div>
+            <div id="preview-content" class="preview-content">
+                <!-- Entry content will be displayed here -->
+            </div>
+            <div class="preview-actions">
+                <button id="edit-entry-btn">Edit Entry</button>
+                <button id="delete-entry-btn">Delete Entry</button>
+                <button id="close-preview-btn">Close Preview</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Entry Template (Hidden) -->
+    <template id="entry-template">
+        <article class="journal-entry" data-entry-id="" data-author="" data-type="" data-date="">
+            <div class="entry-card">
+                <div class="entry-card-header">
+                    <h4 class="entry-card-title"></h4>
+                    <div class="entry-card-meta">
+                        <span class="entry-card-date"></span>
+                        <span class="entry-card-author"></span>
+                        <span class="entry-card-type"></span>
+                    </div>
+                </div>
+                <div class="entry-card-preview">
+                    <div class="text-preview"></div>
+                    <div class="drawing-preview"></div>
+                </div>
+                <div class="entry-card-actions">
+                    <button class="view-entry-btn">View</button>
+                    <button class="edit-entry-btn">Edit</button>
+                    <button class="delete-entry-btn">Delete</button>
+                </div>
+            </div>
+        </article>
+    </template>
+
+    <!-- Entry Data Storage Template -->
+    <template id="entry-data-template">
+        <div class="entry-data" data-version="1.0">
+            <div class="entry-metadata">
+                <div class="entry-id"></div>
+                <div class="entry-title"></div>
+                <div class="entry-date"></div>
+                <div class="entry-author"></div>
+                <div class="entry-type"></div>
+                <div class="entry-created"></div>
+                <div class="entry-modified"></div>
+            </div>
+            <div class="entry-content">
+                <div class="text-content"></div>
+                <div class="drawing-content"></div>
+                <div class="formatting-data"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Sync Status -->
+    <div id="sync-status" class="sync-status" style="display: none;">
+        <div class="sync-message">
+            <span id="sync-message-text">Syncing...</span>
+            <div class="sync-progress">
+                <div class="sync-progress-bar" id="sync-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Data Storage -->
+    <div id="entry-storage" style="display: none;">
+        <!-- Entry data will be stored here temporarily before saving to entry.html -->
+    </div>
+    <script src="js/journal.js"></script>
+</body>
+</html>

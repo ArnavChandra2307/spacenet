@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat - Just Us</title>
+  <link rel="stylesheet" href="css/chat.css" />
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-database-compat.js"></script>
+</head>
+<body>
+<div class="chat-container">
+<div class="chat-header">
+  <img id="chatHeaderAvatar" class="avatar" src="" alt="Avatar" />
+  <span id="chatHeaderName"></span>
+</div>
+
+
+    <div class="chat-box" id="chat-box">
+      <!-- Real-time messages will appear here -->
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="message-input" placeholder="Type your love here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="js/chat.js"></script>
+</body>
+</html>

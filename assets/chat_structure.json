@@ -1,0 +1,28 @@
+{
+  "chats": {
+    "arnav_anokhi": {
+      "messages": {
+        "msg1": {
+          "sender": "arnav",
+          "text": "Hey, kya haal hai?",
+          "timestamp": 1721430000000,
+          "status": "seen"
+        },
+        "msg2": {
+          "sender": "anokhi",
+          "text": "Sab mast hai, tu bataa?",
+          "timestamp": 1721430300000,
+          "status": "delivered"
+        }
+      },
+      "typing": {
+        "arnav": false,
+        "anokhi": true
+      },
+      "lastSeen": {
+        "arnav": 1721430400000,
+        "anokhi": 1721430500000
+      }
+    }
+  }
+}

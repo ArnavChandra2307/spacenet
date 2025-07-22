@@ -1,0 +1,172 @@
+/* Lock screen styles */
+body.lock-screen {
+  margin: 0;
+  height: 100vh;
+  background: url('assets/background.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 300px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+}
+
+.glass h2 span {
+  font-size: 1.5rem;
+  color: #ffc6c6;
+}
+
+.login-box input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+.login-box button {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background-color: #ff9aa2;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #ff758f;
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #ffc;
+}
+
+/* Floating hearts animation */
+.floating-hearts::before,
+.floating-hearts::after {
+  content: "💖 💗 💘 💝 💞";
+  position: absolute;
+  font-size: 2rem;
+  animation: floatHearts 15s linear infinite;
+  opacity: 0.2;
+  left: 10%;
+  top: 0;
+}
+
+.floating-hearts::after {
+  left: 80%;
+  animation-delay: 5s;
+}
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0.1;
+  }
+}
+
+/* Dashboard styles */
+body.dashboard {
+  background: #fff1eb;
+  font-family: 'Comic Sans MS', cursive;
+  margin: 0;
+  padding: 0;
+  color: #6b3b2d;
+  overflow-x: hidden;
+}
+
+.welcome {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+}
+
+.welcome h1 {
+  font-size: 2rem;
+  color: #a65b45;
+  margin: 0;
+}
+
+.welcome span {
+  font-weight: bold;
+  font-size: 2.4rem;
+  color: #f88e91;
+}
+
+/* Grid container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Card styles */
+.card {
+  background: #ffe5d9;
+  border-radius: 20px;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Icon styling */
+.icon {
+  width: 80px;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+/* Specific fixes */
+.monkey {
+  position: relative;
+  top: -10px;
+  margin-bottom: -10px;
+}
+
+.teddy, .hamster, .icon {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.small-icon {
+  width: 50px;
+  margin-bottom: 0.3rem;
+}
+
+.quote {
+  font-size: 0.9rem;
+  color: #955;
+  margin-top: 0.5rem;
+}

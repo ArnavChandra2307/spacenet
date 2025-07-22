@@ -1,0 +1,314 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffdee9, #b5fffc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-container {
+  width: 95%;
+  max-width: 500px;
+  height: 90vh;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background-color: #ffb6c1;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #fff;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #fffafc;
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.sent {
+  background-color: #d1f5d3;
+  align-self: flex-end;
+}
+
+.received {
+  background-color: #fce4ec;
+  align-self: flex-start;
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input-area button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ff69b4;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+/* 🚀 Message Status Indicators CSS */
+.seen-status {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.status-icon {
+  font-size: 12px;
+}
+
+.status-icon.sent-only {
+  color: #999; /* Gray single tick */
+}
+
+.status-icon.delivered {
+  color: #999; /* Gray double tick */
+}
+
+.status-icon.seen {
+  color: #4FC3F7; /* Blue tick for seen */
+}
+
+/* Message styling improvements */
+.message.sent {
+  text-align: right;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-left: 20%;
+  border-radius: 18px 18px 4px 18px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.message.received {
+  text-align: left;
+  background: #f1f1f1;
+  color: #333;
+  margin-right: 20%;
+  border-radius: 18px 18px 18px 4px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+
+.message .sender {
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.message p {
+  margin: 0;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* 🚀 Animation for status updates */
+.status-icon {
+  transition: color 0.3s ease;
+}
+
+.seen-status {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  .seen-status {
+    font-size: 10px;
+  }
+  
+  .message.sent {
+    margin-left: 10%;
+  }
+  
+  .message.received {
+    margin-right: 10%;
+  }
+}/* 🚀 Typing Indicator Styles */
+.typing {
+  opacity: 0.8;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.typing-dots {
+  display: inline-flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.typing-dots span {
+  height: 6px;
+  width: 6px;
+  background-color: #999;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: typingDots 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.typing-text {
+  font-style: italic;
+  color: #666;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+@keyframes typingDots {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 0.8; transform: translateY(0); }
+}
+/* 🚀 Unread Messages Banner */
+.unread-banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  animation: slideDown 0.3s ease-out;
+  margin-bottom: 5px;
+  border-radius: 0 0 10px 10px;
+}
+
+.unread-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.unread-count {
+  background: rgba(255,255,255,0.3);
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 12px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.unread-text {
+  font-size: 14px;
+}
+
+.scroll-down-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.scroll-down-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(2px);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Make chat container relative for sticky positioning */
+.chat-container {
+  position: relative;
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coupleverse - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/ui.css" />
+</head>
+<body class="dashboard">
+  <div class="floating-hearts"></div>
+
+  <div class="welcome">
+<h1>Welcome Back,<br><span id="username">Anokhi</span>!</h1>
+
+  </div>
+
+  <!-- Grid Section -->
+<div class="grid-container">
+  <a href="chat.html" class="card">
+    <img src="assets/chat.png" alt="Chat Icon" class="icon"/>
+    <p>Chat</p>
+  </a>
+
+  <a href="letters.html" class="card">
+    <img src="assets/letter.png" alt="Letter Icon" class="icon"/>
+    <p>Love Letters</p>
+  </a>
+
+  <a href="journal.html" class="card">
+    <img src="assets/journal.png" alt="Journal Icon" class="icon"/>
+    <p>Journal</p>
+  </a>
+    <!-- 🆕 NEW TILE -->
+  <a href="pictures.html" class="card">
+    <img src="assets/pictures.png" alt="Memories Icon" class="icon"/>
+    <p>Pictures</p>
+  </a>
+</div>
+</div>
+
+  <!-- 💖 Important Date Highlight -->
+  <div class="important-date-tile" id="closestDateTile">
+    <div class="event-name" id="closestEventName">No upcoming events</div>
+<div class="heart-wrapper" style="position: relative;">
+  <img src="assets/heart.png" alt="Heart Icon" />
+  <div class="date-inside-heart" id="closestEventDate">--</div>
+</div>
+
+    <img src="assets/plus.png" alt="Add" class="plus-icon" onclick="toggleForm()" />
+  </div>
+
+  <!-- 📅 Add Date Form (Initially Hidden) -->
+  <div class="important-dates" id="dateFormSection">
+    <h2>Add a Special Date 💖</h2>
+    <form id="dateForm">
+      <input type="text" id="eventName" placeholder="Enter event name" required />
+      <input type="date" id="eventDate" required />
+      <button type="submit">Add Date</button>
+    </form>
+    <ul id="dateList"></ul>
+  </div>
+
+  <!-- ❤️ Love Score Block -->
+  <div class="love-score-block">
+    <h3>Today's Love Score</h3>
+    <p>Based on our recent chats: <strong>94%</strong> 💞</p>
+    <p><em>"Love is composed of a single soul inhabiting two bodies."</em></p>
+  </div>
+
+  <!-- JavaScript -->
+<script>
+  // ✅ If no username is found in localStorage, redirect to login
+  if (!localStorage.getItem("username")) {
+    alert("Please log in first!");
+    window.location.href = "index.html";
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const username = localStorage.getItem("username") || "Sweetheart";
+    document.getElementById("username").textContent = username;
+
+    showDates();
+    updateClosestDate();
+
+    document.getElementById("dateForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("eventName").value.trim();
+      const date = document.getElementById("eventDate").value;
+
+      if (!name || !date) return; // validation
+
+      const newDate = { name, date };
+      let storedDates = JSON.parse(localStorage.getItem("importantDates")) || [];
+      storedDates.push(newDate);
+      localStorage.setItem("importantDates", JSON.stringify(storedDates));
+
+      document.getElementById("dateForm").reset();
+      showDates();
+      updateClosestDate();
+    });
+  });
+
+  function toggleForm() {
+    const formSection = document.getElementById("dateFormSection");
+    formSection.style.display = formSection.style.display === "none" ? "block" : "none";
+  }
+
+  function showDates() {
+    const list = document.getElementById("dateList");
+    list.innerHTML = "";
+    let storedDates = JSON.parse(localStorage.getItem("importantDates")) || [];
+
+    storedDates.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    storedDates.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} – ${item.date}`;
+      list.appendChild(li);
+    });
+  }
+
+  function updateClosestDate() {
+    let storedDates = JSON.parse(localStorage.getItem("importantDates")) || [];
+    const today = new Date();
+    storedDates.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const upcoming = storedDates.find(d => new Date(d.date) >= today);
+    const nameEl = document.getElementById("closestEventName");
+    const dateEl = document.getElementById("closestEventDate");
+
+    if (upcoming) {
+      nameEl.textContent = upcoming.name;
+      dateEl.textContent = upcoming.date;
+    } else {
+      nameEl.textContent = "No upcoming events";
+      dateEl.textContent = "--";
+    }
+  }
+</script>
+
+</body>
+</html>

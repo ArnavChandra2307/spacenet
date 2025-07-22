@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoupleVerse - Locked</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url("assets/background.png") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .lock-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .lock-container img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .lock-container h1 {
+      color: white;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .lock-container input[type="password"] {
+      padding: 10px;
+      width: 100%;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .lock-container button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff4d6d;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .lock-container button:hover {
+      background-color: #e8435e;
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hearts span {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts">
+    <span style="left: 5%">❤️</span>
+    <span style="left: 25%">💕</span>
+    <span style="left: 45%">💖</span>
+    <span style="left: 65%">💘</span>
+    <span style="left: 85%">❤️‍🔥</span>
+    <span style="left: 15%">💓</span>
+    <span style="left: 35%">💗</span>
+    <span style="left: 75%">💞</span>
+  </div>
+
+  <div class="lock-container">
+    <img src="assets/lock-icon.png" alt="Lock Icon" />
+    <h1>Welcome to CoupleVerse</h1>
+    <form action="dashboard.html" method="get" onsubmit="return checkPassword()">
+      <input type="password" id="password" placeholder="Enter Secret Password" required />
+      <button type="submit">Unlock</button>
+    </form>
+  </div>
+
+<script>
+  function checkPassword() {
+    const pass = document.getElementById('password').value;
+
+    let username = "";
+    if (pass === "anokhi143") {
+      username = "Anokhi";
+    } else if (pass === "arnav321") {
+      username = "Arnav";
+    } else {
+      alert("Wrong password! Try again.");
+      return false;
+    }
+
+    // Save username for later use in localStorage
+    localStorage.setItem("username", username);
+    return true;
+  }
+</script>
+
+
+</body>
+</html>

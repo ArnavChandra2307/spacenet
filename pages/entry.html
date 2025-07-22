@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Our Memories 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reuse the same CSS from journal.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .all-entries {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .entry-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .entry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .entry-title {
+            font-family: 'Pacifico', cursive;
+            color: #667eea;
+            font-size: 1.4rem;
+        }
+        
+        .entry-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .entry-author {
+            font-style: italic;
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        
+        .entry-content {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .entry-image, .entry-drawing {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+        }
+        
+        /* Modal for image viewing */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../journal.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Journal
+        </a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-heart"></i> All Our Memories</h1>
+            <p>Every special moment we've shared together</p>
+        </div>
+        
+        <div class="all-entries" id="allEntries">
+            <!-- Entries will be loaded here -->
+        </div>
+    </div>
+    
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+    // Load all entries from localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+        const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+        const entriesContainer = document.getElementById('allEntries');
+        
+        if (entries.length === 0) {
+            entriesContainer.innerHTML = `
+                <div class="empty-state">
+                    <h3>No memories yet 💔</h3>
+                    <p>Go back and create your first memory!</p>
+                </div>`;
+            return;
+        }
+        
+        entriesContainer.innerHTML = entries.map(entry => `
+            <div class="entry-card">
+                <div class="entry-header">
+                    <h3 class="entry-title">${escapeHtml(entry.title)}</h3>
+                    <span class="entry-date">${formatDate(entry.date)}</span>
+                </div>
+                <p class="entry-author">Written by: ${getAuthorName(entry.author)}</p>
+                ${entry.image ? `<img src="${entry.image}" class="entry-image" onclick="openModal('${entry.image}')">` : ''}
+                ${entry.drawing ? `<img src="${entry.drawing}" class="entry-drawing" onclick="openModal('${entry.drawing}')">` : ''}
+                <div class="entry-content">${escapeHtml(entry.content)}</div>
+            </div>
+        `).join('');
+    });
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
+    
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
+    }
+    
+    function getAuthorName(author) {
+        const names = {'arnav': '👨 Arnav', 'anokhi': '👩 Anokhi', 'both': '💑 Both'};
+        return names[author] || '💕';
+    }
+    
+    function openModal(imageSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        if (modal && modalImg) {
+            modal.style.display = 'flex';
+            modalImg.src = imageSrc;
+        }
+    }
+    
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        if (modal) modal.style.display = 'none';
+    }
+    
+    // Close modal when clicking outside image
+    window.onclick = function(event) {
+        const modal = document.getElementById('imageModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+    </script>
+</body>
+</html>
