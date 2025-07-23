@@ -1,3 +1,6 @@
+/* Import romantic fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,11 +9,19 @@
 
 body {
     font-family: 'Cormorant Garamond', serif;
-    background: linear-gradient(135deg, #fdf6f0 0%, #f4e8d8 50%, #fdf6f0 100%);
+    background: linear-gradient(135deg, #fef7f0 0%, #ffe8f1 25%, #fef0f4 50%, #f9e4ec 75%, #fef7f0 100%);
     min-height: 100vh;
-    background-size: cover;
+    background-size: 400% 400%;
+    animation: romanticGradient 20s ease infinite;
     position: relative;
     color: #4a4a4a;
+    overflow-x: hidden;
+}
+
+@keyframes romanticGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 body::before {
@@ -21,11 +32,40 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(255,192,203,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255,182,193,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(255,228,225,0.1) 0%, transparent 50%);
+        radial-gradient(circle at 15% 25%, rgba(255,182,193,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(255,192,203,0.12) 0%, transparent 45%),
+        radial-gradient(circle at 45% 15%, rgba(255,228,225,0.18) 0%, transparent 35%),
+        radial-gradient(circle at 25% 85%, rgba(255,218,185,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 35%, rgba(255,240,245,0.2) 0%, transparent 30%);
     pointer-events: none;
     z-index: -1;
+    animation: floatingBubbles 25s ease-in-out infinite;
+}
+
+@keyframes floatingBubbles {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(120deg); }
+    66% { transform: translateY(5px) rotate(240deg); }
+}
+
+body::after {
+    content: '💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨ 💕 ✨ 💖 ✨';
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 20px;
+    font-size: 14px;
+    color: rgba(255, 182, 193, 0.6);
+    z-index: -1;
+    animation: floatingHearts 30s linear infinite;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+@keyframes floatingHearts {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
 }
 
 .container {
@@ -33,43 +73,174 @@ body::before {
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
+    position: relative;
+}
+
+/* Romantic floating hearts */
+.container::before {
+    content: '💝';
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    font-size: 24px;
+    animation: floatHeart1 8s ease-in-out infinite;
+    z-index: 1;
+}
+
+.container::after {
+    content: '💖';
+    position: absolute;
+    bottom: 15%;
+    left: 3%;
+    font-size: 20px;
+    animation: floatHeart2 12s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes floatHeart1 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+    25% { transform: translateY(-15px) rotate(5deg); opacity: 1; }
+    50% { transform: translateY(-8px) rotate(-3deg); opacity: 0.8; }
+    75% { transform: translateY(-20px) rotate(7deg); opacity: 0.9; }
+}
+
+@keyframes floatHeart2 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+    33% { transform: translateY(-12px) rotate(-4deg); opacity: 0.9; }
+    66% { transform: translateY(-18px) rotate(6deg); opacity: 1; }
 }
 
 /* Header Styles */
 .header {
     text-align: center;
     margin-bottom: 30px;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.3);
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    box-shadow: 
+        0 15px 45px rgba(255, 182, 193, 0.3),
+        0 5px 15px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255,192,203,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255,182,193,0.1), transparent, rgba(255,192,203,0.1), transparent);
+    animation: romanticSpin 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes romanticSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .date {
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: #8B4B6B;
-    margin-bottom: 10px;
-    font-weight: 300;
-    letter-spacing: 1px;
+    font-size: 18px;
+    color: #a0567a;
+    margin-bottom: 15px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.date::before {
+    content: '✦';
+    margin-right: 10px;
+    color: #ff6b9d;
+}
+
+.date::after {
+    content: '✦';
+    margin-left: 10px;
+    color: #ff6b9d;
 }
 
 .couple-names {
     font-family: 'Great Vibes', cursive;
-    font-size: 48px;
-    color: #B8336A;
-    margin: 15px 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    font-size: 56px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d, #f06292, #ec407a);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.2);
+    animation: romanticTextGlow 4s ease-in-out infinite;
+    position: relative;
+}
+
+@keyframes romanticTextGlow {
+    0%, 100% { 
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 5px rgba(255, 107, 157, 0.3));
+    }
+    50% { 
+        background-position: 100% 50%;
+        filter: drop-shadow(0 0 15px rgba(255, 107, 157, 0.6));
+    }
+}
+
+.couple-names::before {
+    content: '💕';
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    animation: heartPulse 2s ease-in-out infinite;
+}
+
+.couple-names::after {
+    content: '💕';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    animation: heartPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.2); }
 }
 
 .subtitle {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    color: #6B4B8B;
+    font-size: 20px;
+    color: #8b4b6b;
     font-style: italic;
-    font-weight: 300;
+    font-weight: 400;
+    position: relative;
+    padding: 0 40px;
+}
+
+.subtitle::before {
+    content: '〜';
+    position: absolute;
+    left: 10px;
+    color: #ff6b9d;
+    font-size: 24px;
+}
+
+.subtitle::after {
+    content: '〜';
+    position: absolute;
+    right: 10px;
+    color: #ff6b9d;
+    font-size: 24px;
 }
 
 /* Letter Writing Section */
@@ -78,12 +249,16 @@ body::before {
 }
 
 .paper {
-    background: #fefefe;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    background: linear-gradient(145deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
+    border-radius: 20px;
+    box-shadow: 
+        0 20px 60px rgba(255, 107, 157, 0.2),
+        0 10px 25px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.9);
     position: relative;
     overflow: hidden;
-    border: 2px solid #f0e6d6;
+    border: 3px solid rgba(255, 182, 193, 0.3);
+    transform: perspective(1000px) rotateX(1deg);
 }
 
 .paper::before {
@@ -94,14 +269,29 @@ body::before {
     right: 0;
     bottom: 0;
     background-image: 
-        linear-gradient(to right, transparent 0px, transparent 40px, #ffd1dc 40px, #ffd1dc 42px, transparent 42px),
-        repeating-linear-gradient(transparent, transparent 28px, #e6f3ff 28px, #e6f3ff 30px);
-    opacity: 0.3;
+        linear-gradient(to right, transparent 0px, transparent 45px, rgba(255,182,193,0.3) 45px, rgba(255,182,193,0.3) 47px, transparent 47px),
+        repeating-linear-gradient(transparent, transparent 32px, rgba(255,218,224,0.4) 32px, rgba(255,218,224,0.4) 34px);
+    opacity: 0.6;
     pointer-events: none;
 }
 
+.paper::after {
+    content: '💌';
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    opacity: 0.7;
+    animation: gentleFloat 6s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
 .letter-content {
-    padding: 40px;
+    padding: 50px;
     position: relative;
     z-index: 1;
 }
@@ -109,175 +299,283 @@ body::before {
 .letter-title {
     width: 100%;
     font-family: 'Dancing Script', cursive;
-    font-size: 32px;
-    color: #8B4B6B;
+    font-size: 36px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-align: center;
     border: none;
-    background: transparent;
+    background-color: transparent;
     outline: none;
-    margin-bottom: 30px;
-    padding: 10px;
-    font-weight: 600;
+    margin-bottom: 35px;
+    padding: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .letter-title::placeholder {
-    color: #c9a9bd;
+    color: rgba(255, 107, 157, 0.5);
     font-style: italic;
+    opacity: 1;
 }
 
 .letter-body {
     width: 100%;
-    height: 350px;
+    height: 400px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 19px;
+    line-height: 2;
     color: #4a4a4a;
     border: none;
     background: transparent;
     outline: none;
     resize: none;
-    padding: 20px 0;
-    letter-spacing: 0.5px;
+    padding: 25px 0;
+    letter-spacing: 0.8px;
+    word-spacing: 2px;
 }
 
 .letter-body::placeholder {
-    color: #a9a9a9;
+    color: rgba(139, 75, 107, 0.5);
     font-style: italic;
+    line-height: 1.8;
 }
 
 .letter-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(139, 75, 107, 0.2);
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px solid rgba(255, 182, 193, 0.3);
+    position: relative;
+}
+
+.letter-footer::before {
+    content: '💖';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0 10px;
+    font-size: 18px;
 }
 
 .sender-select {
     font-family: 'Great Vibes', cursive;
-    font-size: 24px;
-    color: #8B4B6B;
-    background: transparent;
+    font-size: 28px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-color: transparent;
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    position: relative;
 }
 
 .sender-select:hover {
-    background: rgba(255, 192, 203, 0.2);
+    background: rgba(255, 182, 193, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
 .send-button {
-    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    background: linear-gradient(135deg, #e91e63 0%, #ff6b9d 50%, #f06292 100%);
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 25px;
+    padding: 15px 35px;
+    border-radius: 30px;
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 157, 0.4),
+        0 2px 5px rgba(0,0,0,0.1);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.send-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.send-button:hover::before {
+    left: 100%;
 }
 
 .send-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 15px 35px rgba(255, 107, 157, 0.6),
+        0 5px 15px rgba(0,0,0,0.2);
+}
+
+.send-button:active {
+    transform: translateY(-1px) scale(1.02);
 }
 
 .heart {
     display: inline-block;
-    animation: heartbeat 2s infinite;
+    animation: romanticHeartbeat 2.5s infinite;
+    margin: 0 5px;
 }
 
-@keyframes heartbeat {
-    0%, 50%, 100% { transform: scale(1); }
-    25%, 75% { transform: scale(1.1); }
+@keyframes romanticHeartbeat {
+    0%, 40%, 100% { transform: scale(1) rotate(0deg); }
+    20% { transform: scale(1.15) rotate(-2deg); }
+    60% { transform: scale(1.1) rotate(2deg); }
 }
 
 /* Letters History Section */
 .letters-history {
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .history-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 36px;
-    color: #8B4B6B;
+    font-size: 42px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d, #f06292);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-align: center;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.2);
+    position: relative;
+    font-weight: 700;
+}
+
+.history-title::before {
+    content: '💌';
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    transform: translateX(-50%);
+    font-size: 36px;
+    animation: romanticBounce 3s ease-in-out infinite;
+}
+
+@keyframes romanticBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
 }
 
 .letters-container {
-    max-height: 600px;
+    max-height: 700px;
     overflow-y: auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        inset 0 8px 25px rgba(255, 182, 193, 0.2),
+        0 10px 30px rgba(0,0,0,0.1);
+    border: 2px solid rgba(255, 192, 203, 0.3);
 }
 
 .letters-container::-webkit-scrollbar {
-    width: 8px;
+    width: 12px;
 }
 
 .letters-container::-webkit-scrollbar-track {
-    background: rgba(255, 192, 203, 0.2);
-    border-radius: 10px;
+    background: rgba(255, 182, 193, 0.2);
+    border-radius: 15px;
 }
 
 .letters-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #ff6b9d, #c44569);
-    border-radius: 10px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.letters-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #d81b60, #f06292);
 }
 
 .no-letters {
     text-align: center;
-    padding: 60px 20px;
-    color: #8B4B6B;
+    padding: 80px 20px;
+    color: #a0567a;
     font-style: italic;
-    font-size: 18px;
+    font-size: 20px;
+    font-family: 'Playfair Display', serif;
 }
 
 .empty-heart {
-    font-size: 48px;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
+    font-size: 64px;
+    margin-bottom: 30px;
+    animation: romanticFloat 4s ease-in-out infinite;
+    display: block;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+@keyframes romanticFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+    75% { transform: translateY(-12px) rotate(3deg); }
 }
 
 .letter-item {
-    background: rgba(255, 255, 255, 0.95);
-    margin: 20px 0;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    border-left: 4px solid #ff6b9d;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.6s ease;
+    background: rgba(255, 255, 255, 0.98);
+    margin: 25px 0;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 30px rgba(255, 107, 157, 0.2),
+        0 5px 15px rgba(0,0,0,0.1);
+    border-left: 6px solid #ff6b9d;
+    border-right: 2px solid rgba(255, 182, 193, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: romanticFadeInUp 0.8s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.letter-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 182, 193, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+.letter-item:hover::before {
+    left: 100%;
 }
 
 .letter-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+        0 20px 50px rgba(255, 107, 157, 0.3),
+        0 10px 25px rgba(0,0,0,0.15);
+    border-left-color: #e91e63;
 }
 
-@keyframes fadeInUp {
+@keyframes romanticFadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -289,44 +587,76 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid rgba(139, 75, 107, 0.2);
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 182, 193, 0.3);
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.letter-header::after {
+    content: '💕';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0 8px;
+    font-size: 16px;
 }
 
 .letter-item-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 24px;
-    color: #8B4B6B;
-    font-weight: 600;
+    font-size: 28px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
     margin: 0;
 }
 
 .letter-timestamp {
     font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    color: #6B4B8B;
+    font-size: 15px;
+    color: #8b4b6b;
     font-style: italic;
+    font-weight: 400;
 }
 
 .letter-item-body {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.9;
     color: #4a4a4a;
-    margin: 15px 0;
+    margin: 20px 0;
     white-space: pre-wrap;
     word-wrap: break-word;
+    letter-spacing: 0.5px;
+    word-spacing: 1px;
 }
 
 .letter-signature {
     text-align: right;
     font-family: 'Great Vibes', cursive;
-    font-size: 20px;
-    color: #B8336A;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(139, 75, 107, 0.1);
+    font-size: 24px;
+    background: linear-gradient(135deg, #e91e63, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(255, 182, 193, 0.2);
+    position: relative;
+}
+
+.letter-signature::before {
+    content: '💖';
+    position: absolute;
+    top: -12px;
+    right: 0;
+    background: white;
+    padding: 0 8px;
+    font-size: 16px;
 }
 
 /* Loading Overlay */
@@ -336,12 +666,12 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(253, 246, 240, 0.95);
+    background: rgba(254, 247, 240, 0.98);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 }
 
 .loading-overlay.hidden {
@@ -350,24 +680,56 @@ body::before {
 
 .loading-content {
     text-align: center;
-    color: #8B4B6B;
+    color: #a0567a;
     font-family: 'Playfair Display', serif;
 }
 
 .heart-loading {
-    font-size: 64px;
-    margin-bottom: 20px;
-    animation: pulse 1.5s ease-in-out infinite;
+    font-size: 80px;
+    margin-bottom: 30px;
+    animation: romanticPulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+@keyframes romanticPulse {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+        filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.5));
+    }
+    50% { 
+        transform: scale(1.3) rotate(5deg); 
+        filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.8));
+    }
 }
 
 .loading-content p {
-    font-size: 18px;
+    font-size: 20px;
     font-style: italic;
+    font-weight: 400;
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Romantic sparkle effects */
+.sparkle {
+    position: absolute;
+    color: rgba(255, 182, 193, 0.8);
+    font-size: 12px;
+    animation: sparkleEffect 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+.sparkle:nth-child(3) { bottom: 30%; left: 10%; animation-delay: 2s; }
+.sparkle:nth-child(4) { bottom: 20%; right: 25%; animation-delay: 3s; }
+
+@keyframes sparkleEffect {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
 }
 
 /* Responsive Design */
@@ -377,7 +739,46 @@ body::before {
     }
     
     .couple-names {
-        font-size: 36px;
+        font-size: 42px;
+    }
+    
+    .couple-names::before,
+    .couple-names::after {
+        display: none;
+    }
+    
+    .letter-title {
+        font-size: 28px;
+    }
+    
+    .letter-body {
+        height: 300px;
+        font-size: 17px;
+    }
+    
+    .letter-footer {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .letters-container {
+        max-height: 500px;
+        padding: 20px;
+    }
+    
+    .letter-content {
+        padding: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .couple-names {
+        font-size: 32px;
+    }
+    
+    .letter-content {
+        padding: 25px;
     }
     
     .letter-title {
@@ -389,32 +790,16 @@ body::before {
         font-size: 16px;
     }
     
-    .letter-footer {
-        flex-direction: column;
-        gap: 15px;
-        align-items: center;
-    }
-    
-    .letters-container {
-        max-height: 400px;
-    }
-}
-
-@media (max-width: 480px) {
-    .couple-names {
-        font-size: 28px;
-    }
-    
-    .letter-content {
+    .header {
         padding: 25px;
     }
     
-    .letter-title {
-        font-size: 20px;
+    .date {
+        font-size: 16px;
     }
     
-    .letter-body {
-        height: 200px;
-        font-size: 14px;
+    .subtitle {
+        font-size: 18px;
+        padding: 0 20px;
     }
 }
