@@ -273,34 +273,37 @@ class JournalApp {
 
     // Text Formatting Setup
     setupFormattingToolbar() {
-        const toolbar = document.querySelector('.text-formatting-toolbar');
-        const textarea = document.getElementById('entry-text');
-        
-        if (toolbar && textarea) {
-            toolbar.addEventListener('click', (e) => {
-                if (e.target.hasAttribute('data-format')) {
-                    this.applyTextFormatting(e.target.getAttribute('data-format'), textarea);
-                }
-            });
-        }
-
-        // Font size and color changes
-        const fontSize = document.getElementById('font-size');
-        if (fontSize && textarea) {
-            fontSize.addEventListener('change', (e) => {
-                textarea.style.fontSize = this.getFontSize(e.target.value);
-            });
-        }
-
-        const textColor = document.getElementById('text-color');
-        if (textColor && textarea) {
-            textColor.addEventListener('change', (e) => {
-                textarea.style.color = e.target.value;
-            });
-        }
+    const toolbar = document.querySelector('.text-formatting-toolbar');
+    const editableDiv = document.getElementById('entry-text');
+    
+    if (toolbar && editableDiv) {
+        toolbar.addEventListener('click', (e) => {
+            if (e.target.hasAttribute('data-format')) {
+                this.applyTextFormatting(e.target.getAttribute('data-format'));
+            }
+        });
     }
 
-applyTextFormatting(format, editableDiv) {
+    // Font size and color changes
+    const fontSize = document.getElementById('font-size');
+    if (fontSize && editableDiv) {
+        fontSize.addEventListener('change', (e) => {
+            editableDiv.style.fontSize = this.getFontSize(e.target.value);
+        });
+    }
+
+    const textColor = document.getElementById('text-color');
+    if (textColor && editableDiv) {
+        textColor.addEventListener('change', (e) => {
+            editableDiv.style.color = e.target.value;
+        });
+    }
+}
+
+applyTextFormatting(format, textarea) {
+    const editableDiv = document.getElementById('entry-text');
+    if (!editableDiv) return;
+    
     editableDiv.focus();
 
     const selection = window.getSelection();
