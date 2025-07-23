@@ -544,7 +544,7 @@ body {
     box-shadow: 0 12px 35px rgba(255, 20, 147, 0.5);
 }
 
-/* Loading indicator */
+/* Loading indicator with auto-hide after 3 seconds */
 .loading {
     position: fixed;
     top: 50%;
@@ -568,6 +568,30 @@ body {
 .loading.active {
     opacity: 1;
     visibility: visible;
+    animation: auto-hide-loading 3s ease-in-out forwards;
+}
+
+/* Auto-hide animation for loading */
+@keyframes auto-hide-loading {
+    0% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    95% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
 }
 
 .spinner {
