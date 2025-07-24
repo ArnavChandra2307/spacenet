@@ -43,6 +43,11 @@ let unseenMessages = [];
 let unreadCount = 0;
 let hasInitialLoad = false;
 
+// 📱 NEW: Mobile keyboard and viewport handling
+let originalViewportHeight = window.innerHeight;
+let isKeyboardOpen = false;
+let inputFocused = false;
+
 window.addEventListener('focus', () => {
   isWindowActive = true;
   console.log('Window focused - marking unseen messages as seen');
@@ -52,6 +57,80 @@ window.addEventListener('blur', () => {
   isWindowActive = false;
   console.log('Window blurred - user not actively viewing');
 });
+
+// 📱 NEW: Detect mobile devices
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+    || window.innerWidth <= 768;
+}
+
+// 📱 NEW: Handle viewport changes (keyboard open/close)
+function handleViewportChange() {
+  const currentHeight = window.innerHeight;
+  const heightDifference = originalViewportHeight - currentHeight;
+  
+  // Consider keyboard open if height decreased by more than 150px
+  const wasKeyboardOpen = isKeyboardOpen;
+  isKeyboardOpen = heightDifference > 150;
+  
+  if (isMobileDevice() && inputFocused) {
+    const chatContainer = document.querySelector('.chat-container') || document.body;
+    const chatBox = document.getElementById('chat-box');
+    
+    if (isKeyboardOpen && !wasKeyboardOpen) {
+      // Keyboard just opened
+      console.log('📱 Keyboard opened');
+      chatContainer.style.height = `${currentHeight}px`;
+      
+      // Scroll to bottom after a short delay to ensure UI has adjusted
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+      
+    } else if (!isKeyboardOpen && wasKeyboardOpen) {
+      // Keyboard just closed
+      console.log('📱 Keyboard closed');
+      chatContainer.style.height = '';
+      originalViewportHeight = currentHeight;
+    }
+  }
+}
+
+// 📱 NEW: Listen for viewport changes
+window.addEventListener('resize', handleViewportChange);
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    originalViewportHeight = window.innerHeight;
+    handleViewportChange();
+  }, 500);
+});
+
+// 📱 NEW: Enhanced textarea auto-resize function
+function autoResizeTextarea(textarea) {
+  // Reset height to auto to get the correct scrollHeight
+  textarea.style.height = 'auto';
+  
+  // Calculate the new height based on content
+  const minHeight = 40; // Minimum height in pixels
+  const maxHeight = 120; // Maximum height before scrollbar appears
+  const newHeight = Math.min(Math.max(textarea.scrollHeight, minHeight), maxHeight);
+  
+  textarea.style.height = newHeight + 'px';
+  
+  // Add scrollbar if content exceeds max height
+  if (textarea.scrollHeight > maxHeight) {
+    textarea.style.overflowY = 'auto';
+  } else {
+    textarea.style.overflowY = 'hidden';
+  }
+  
+  // If on mobile and keyboard is open, ensure chat stays scrolled to bottom
+  if (isMobileDevice() && isKeyboardOpen && inputFocused) {
+    setTimeout(() => {
+      scrollToBottom();
+    }, 50);
+  }
+}
 
 // 🚀 NEW: Typing indicator functions
 function startTyping() {
@@ -148,6 +227,7 @@ function markAllAsSeen() {
     console.log('ℹ️ No unseen messages to mark');
   }
 }
+
 function showUnreadBanner(count) {
   let banner = document.getElementById('unread-banner');
   
@@ -177,11 +257,14 @@ function showUnreadBanner(count) {
   }
 }
 
-// 🚀 NEW: Scroll to bottom function
+// 🚀 NEW: Enhanced scroll to bottom function
 function scrollToBottom() {
   const chatBox = document.getElementById('chat-box');
-  chatBox.scrollTop = chatBox.scrollHeight;
+  if (chatBox) {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 }
+
 function updateTypingIndicator(typingUsers) {
   const chatBox = document.getElementById("chat-box");
   let typingIndicator = document.getElementById("typing-indicator");
@@ -208,7 +291,7 @@ function updateTypingIndicator(typingUsers) {
       `;
       chatBox.appendChild(typingIndicator);
     }
-    chatBox.scrollTop = chatBox.scrollHeight;
+    scrollToBottom();
   } else {
     // Hide typing indicator
     if (typingIndicator) {
@@ -242,6 +325,14 @@ function sendMessage() {
     };
     messagesRef.push(messageData);
     input.value = "";
+    
+    // Reset textarea height after sending
+    autoResizeTextarea(input);
+    
+    // Scroll to bottom after sending
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
   }
 }
 
@@ -328,7 +419,7 @@ function displayMessage(sender, message, seen, timestamp, messageKey, data) {
   `;
 
   chatBox.appendChild(messageDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  scrollToBottom();
 }
 
 // 🔁 Enhanced message listener with better status handling
@@ -388,51 +479,155 @@ window.addEventListener('focus', () => {
   }
 });
 
-// 📥 UI Event listeners for Send button and Enter key
+// 📥 Enhanced UI Event listeners with mobile optimizations
 document.addEventListener('DOMContentLoaded', () => {
   const sendButton = document.querySelector('button');
   const messageInput = document.getElementById('message-input');
   const chatBox = document.getElementById('chat-box');
 
-  const scrollToBottom = () => {
-    chatBox.scrollTop = chatBox.scrollHeight;
-  };
+  // 📱 NEW: Convert input to textarea for better mobile experience
+  if (messageInput && messageInput.tagName.toLowerCase() === 'input') {
+    const textarea = document.createElement('textarea');
+    textarea.id = 'message-input';
+    textarea.className = messageInput.className;
+    textarea.placeholder = messageInput.placeholder || 'Type a message...';
+    textarea.rows = 1;
+    
+    // Copy any inline styles
+    textarea.style.cssText = messageInput.style.cssText;
+    
+    // Replace input with textarea
+    messageInput.parentNode.replaceChild(textarea, messageInput);
+    
+    // Update reference
+    const newMessageInput = document.getElementById('message-input');
+    
+    // 📱 NEW: Enhanced mobile input handling
+    newMessageInput.addEventListener('focus', () => {
+      console.log('📱 Input focused');
+      inputFocused = true;
+      
+      if (isMobileDevice()) {
+        // Small delay to allow keyboard to appear
+        setTimeout(() => {
+          handleViewportChange();
+          scrollToBottom();
+        }, 300);
+      }
+    });
+
+    newMessageInput.addEventListener('blur', () => {
+      console.log('📱 Input blurred');
+      inputFocused = false;
+      stopTyping();
+      
+      if (isMobileDevice()) {
+        setTimeout(() => {
+          handleViewportChange();
+        }, 300);
+      }
+    });
+
+    // 📱 NEW: Auto-resize textarea on input
+    newMessageInput.addEventListener('input', () => {
+      const value = newMessageInput.value.trim();
+      
+      // Handle typing indicator
+      if (value.length > 0) {
+        startTyping();
+      } else {
+        stopTyping();
+      }
+      
+      // Auto-resize textarea
+      autoResizeTextarea(newMessageInput);
+    });
+
+    // 📱 NEW: Handle Enter key (send on Enter, new line on Shift+Enter)
+    newMessageInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        if (e.shiftKey) {
+          // Allow new line with Shift+Enter
+          return;
+        } else {
+          // Send message on Enter
+          e.preventDefault();
+          sendMessage();
+        }
+      }
+    });
+
+    // Initial setup
+    autoResizeTextarea(newMessageInput);
+    
+  } else if (messageInput) {
+    // If it's already a textarea, just add the event listeners
+    messageInput.addEventListener('focus', () => {
+      console.log('📱 Input focused');
+      inputFocused = true;
+      
+      if (isMobileDevice()) {
+        setTimeout(() => {
+          handleViewportChange();
+          scrollToBottom();
+        }, 300);
+      }
+    });
+
+    messageInput.addEventListener('blur', () => {
+      console.log('📱 Input blurred');
+      inputFocused = false;
+      stopTyping();
+      
+      if (isMobileDevice()) {
+        setTimeout(() => {
+          handleViewportChange();
+        }, 300);
+      }
+    });
+
+    messageInput.addEventListener('input', () => {
+      const value = messageInput.value.trim();
+      if (value.length > 0) {
+        startTyping();
+      } else {
+        stopTyping();
+      }
+      autoResizeTextarea(messageInput);
+    });
+
+    messageInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        if (e.shiftKey) {
+          return;
+        } else {
+          e.preventDefault();
+          sendMessage();
+        }
+      }
+    });
+
+    autoResizeTextarea(messageInput);
+  }
+
+  // Send button click handler
+  if (sendButton) {
+    sendButton.addEventListener('click', () => {
+      sendMessage();
+    });
+  }
 
   // Make scrollToBottom available globally
   window.scrollToBottom = scrollToBottom;
 
-  sendButton.addEventListener('click', () => {
-    sendMessage();
-  });
-
-  messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  });
-
-  // 🚀 NEW: Typing indicator on input
-  messageInput.addEventListener('input', () => {
-    const value = messageInput.value.trim();
-    if (value.length > 0) {
-      startTyping();
-    } else {
-      stopTyping();
-    }
-  });
-
-  // 🚀 NEW: Stop typing on blur
-  messageInput.addEventListener('blur', () => {
-    stopTyping();
-  });
-
+  // Initial scroll to bottom
   scrollToBottom();
   
   // 🚀 NEW: Check for unread messages on page load
   setTimeout(() => {
     console.log('🚀 Starting unread messages check...');
     checkInitialUnreadMessages();
-  }, 1000); // Increased delay to ensure Firebase is loaded
+  }, 1000);
 });
 
 // 🚀 NEW: Cleanup typing status when user leaves/refreshes page
@@ -491,4 +686,13 @@ window.debugUnread = function() {
 window.testUnreadBanner = function() {
   console.log('🧪 Testing unread banner...');
   showUnreadBanner(3);
+};
+
+// 📱 NEW: Debug mobile functions
+window.debugMobile = function() {
+  console.log('Is mobile device:', isMobileDevice());
+  console.log('Original viewport height:', originalViewportHeight);
+  console.log('Current viewport height:', window.innerHeight);
+  console.log('Is keyboard open:', isKeyboardOpen);
+  console.log('Input focused:', inputFocused);
 };
